@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .container{
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #box{
+                position: relative;
+                background-color: blueviolet;
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="box"></div>
+        </div>
+
+        <script>
+            const screen_displayed = document.getElementsByClassName("container");
+            const box = document.getElementById("box");
+            
+            var win_horizontal_axis;
+            let length;
+            var Off_set;
+            var going_forward_flag;
+            var going_backward_flag;
+            let run_animation;
+
+            win_horizontal_axis = window.screen.width;
+            length = (win_horizontal_axis * 2/3) - (win_horizontal_axis * 1/3);
+            Off_set = win_horizontal_axis/2;
+            length = length - Off_set;
+            going_forward_flag = false;
+            going_backward_flag = false;
+
+            function moving_element_on_vertical_axis()
+            {
+                run_animation = requestAnimationFrame(moving_element_on_vertical_axis);
+
+                if(going_backward_flag === true)
+                {
+                    cancelAnimationFrame(run_animation);
+                }
+                else
+                {
+                    if (length <= (win_horizontal_axis * 2/3) - Off_set && going_forward_flag === false)
+                    {
+                        length+=5;
+                        if(length > (win_horizontal_axis * 2/3) - Off_set )
+                        {
+                            going_forward_flag = true;
+                        }
+                    }
+                    
+                    if(length >= (win_horizontal_axis * 1/3) - Off_set && going_forward_flag === true)
+                    {
+                        length -=5;
+                        if  (length < (win_horizontal_axis * 1/3) - Off_set)
+                        {
+                            going_backward_flag = true;
+                        }
+                    }
+                }
+                box.style.left = `${length}px`;
+            }
+
+            moving_element_on_vertical_axis();
+
+        </script>
+    </body>
+</html>
